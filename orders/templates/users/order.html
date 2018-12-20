@@ -2,30 +2,7 @@
 
 {% block body %}
 <h1>Hello, {{ user.first_name }}</h1>
-<ul>
-    <li>Currently logged in as: {{ user.username }}</li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-</ul>
-<hr>
-<h2>Pizzas</h2>
-<form action="{% url 'order' %}" method="post">
-    {% csrf_token %}
-    <ul>
-        {% for pizza in pizzas %}
-            <li>
-                {{ pizza }}
-                 <input name="pizza" type="submit" value={{ pizza.id }}/>
-            </li>
-        {% endfor %}
-    </ul>
-</form>
-<hr>
-<h2>Toppings</h2>
-<ul>
-    {% for topping in toppings %}
-        <li>
-            {{ topping }}
-        </li>
-    {% endfor %}
-</ul>
+<h2>Shopping Cart:</h2>
+{{ order }}
+<h3>Total: {{ order.price }}</h3>
 {% endblock %}

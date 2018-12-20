@@ -1,10 +1,124 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Users</title>
+        <title>{% block title %}{% endblock %}</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+
+            #pizza, #menu, #toppings, #subs, #addons, #steak, #anysub, #pasta, #salads, #dinner{
+                text-align: center;
+            }
+
+            .sizes  {
+                text-align: justify;
+                margin-left: 40px;
+            }
+
+            #topping3, #addons3, #anysub3  {
+                text-align: center;
+            }
+
+            #topping2, #addons2, #anysub2 {
+                list-style:none;
+            }
+
+            .pizzas {
+                list-style:none;
+            }
+
+            .subs, .pasta, .salads, .dinner {
+                display: flex;
+                flex-wrap: wrap;
+                list-style:none;
+            }
+
+            .subs2, .pasta2, .salads2, .dinner2{
+                margin: 5px;
+                padding: 5px;
+                width: 350px;
+            }
+
+            .col-md {
+                text-align: justify;
+            }
+
+            #hello {
+                background-color: #be0027;
+                color: white;
+            }
+
+            #cart  {
+                text-align: justify;
+                margin-left: 30px;
+            }
+
+            #cancel  {
+                text-align: justify;
+                margin-left: 30px;
+                color: #be0027;
+            }
+
+            #total  {
+                margin-left: 20px;
+            }
+
+            #pay  {
+                margin-left: 12px;
+            }
+
+            #register, #login  {
+                background-color: #be0027;
+                color: white;
+            }
+
+            .select {
+                background-color: #be0027;
+                color: white;
+            }
+
+            .send {
+                background-color: #239346;
+                color: white;
+            }
+
+        </style>
     </head>
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta -->
+        <meta charset="utf-8"/>
+        <meta content="initial-scale=1, width=device-width" name="viewport"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #239346;">
+      <a class="navbar-brand" href="{% url 'index' %}">Pinnocchio's</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            {% if user.username %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'shopping_cart' %}">Shopping Cart</a>
+          </li>
+            {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
         {% block body %}
         {% endblock %}
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </div>
     </body>
 </html>

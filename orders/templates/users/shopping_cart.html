@@ -1,8 +1,104 @@
 {% extends "users/base.html" %}
 
 {% block body %}
-<h1>Hello, {{ user.first_name }}</h1>
-<h2>Shopping Cart:</h2>
-{{ order }}
-<h3>Total: {{ order.price }}</h3>
+<div class="row justify-content-start" id="hello">
+    <div class="col-2">
+        <h4>Hello, {{ user.first_name }}</h4>
+    </div>
+</div>
+</br>
+<h2 id="cart">Shopping Cart:</h2>
+<b id="cancel">{{ message }}</b>
+<ol>
+    {% for order_item in orders_list_pizza %}
+    <li>
+        <ul class=>
+        {% for item in order_item %}
+            <li>
+                {{ item }}
+            </li>
+        {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+
+    {% for order_item in orders_list_subs %}
+    <li>
+        <ul>
+        {% for item in order_item %}
+            <li>
+                {{ item }}
+            </li>
+        {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+<!--</ol>-->
+
+<!--<ol>-->
+    {% for order_item in orders_list_pasta %}
+    <li>
+         <ul>
+        {% for order_item in orders_list_pasta %}
+            <li>
+                {{ order_item }}
+            </li>
+        {% endfor %}
+         </ul>
+    </li>
+    {% endfor %}
+
+     {% for order_item in orders_list_salads %}
+    <li>
+         <ul>
+        {% for order_item in orders_list_salads %}
+            <li>
+                {{ order_item }}
+            </li>
+        {% endfor %}
+         </ul>
+    </li>
+    {% endfor %}
+
+     {% for order_item in orders_list_dinner %}
+    <li>
+         <ul>
+        {% for order_item in orders_list_dinner %}
+            <li>
+                {{ order_item }}
+            </li>
+        {% endfor %}
+         </ul>
+    </li>
+    {% endfor %}
+</ol>
+{% if message == "" %}
+
+<h3 id="total">Total: {{ total }} </h3>
+
+<div id="pay" class="row justify-content-start">
+    <div class="col-1">
+        <form action="{% url 'confirmed_order' %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-danger" name="confirmed" type="submit" value="Cancel">
+        </form>
+    </div>
+    <div class="col-2">
+        <form action="{% url 'confirmed_order_pay' %}" method="POST">
+        {% csrf_token %}
+          <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ key }}"
+            data-amount="{{ total_stripe }}"
+            data-name="Pinochio's Pizza"
+            data-description="Payment"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto">
+          </script>
+        </form>
+    </div>
+</div>
+
+{% endif %}
 {% endblock %}
+

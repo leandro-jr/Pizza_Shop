@@ -1,32 +1,30 @@
 {% extends "users/base.html" %}
 
 {% block body %}
-<h1>Hello, {{ user.first_name }}</h1>
-<ul>
-    <li>Currently logged in as: {{ user.username }}</li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-</ul>
-<hr>
-{% if topping_number %}
-<h2>Choose {{ topping_number }} topping(s) for your order {{ pizza }}:</h2>
-
-<h2>Toppings</h2>
-
-<form action="{% url 'order_toppings' %}" method="post">
-    {% csrf_token %}
-        {% for topping in toppings %}
-                {{ topping }} <input  name="topping" type="checkbox" value="{{ topping.id }}" id="{{ topping.id }}"/><br/>
-        {% endfor %}
-    <input type="submit" value="Send"/>
-</form>
-
-{% else %}
-<h2>Your order: {{ pizza }}</h2>
+<div class="row" id="hello">
+    <div class="col">
+        <h4>Hello, {{ user.first_name }}</h4>
+    </div>
+</div>
+</br>
+<h3>Your order: <b>{{ sub }}</b></h3>
 {{ error }}
-<h3>{{ message }}</h3>
+{% if error != "" %}
+</br>
+<h3>Would you like to add some extras to your sub?</h3>
+
+<form action="{% url 'order_addon' %}" method="post">
+    {% csrf_token %}
+        {% for addon in addons %}
+                {{ addon }} <input  name="addon" type="checkbox" value="{{ addon.id }}" id="{{ addon.id }}"/><br/>
+        {% endfor %}
+    </br>
+    <input class="send" type="submit" value="Send Order"/>
+</form>
+</br>
 <form action="{% url 'shopping_cart' %}" method="get">
     {% csrf_token %}
-    <input type="submit" value="Send"/>
+    <input class="select" type="submit" value="No, thanks"/>
 </form>
 {% endif %}
 {% endblock %}

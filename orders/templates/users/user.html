@@ -1,9 +1,171 @@
 {% extends "users/base.html" %}
 
+{% block title %}
+    Pinochio's Pizza
+{% endblock %}
+
 {% block body %}
-<h1>Hello, {{ user.first_name }}</h1>
-<ul>
-    <li>Currently logged in as: {{ user.username }}</li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-</ul>
+<div class="row" id="hello">
+    <div class="col">
+        <h4>Hello, {{ user.first_name }}</h4>
+    </div>
+</div>
+<h2 id="menu">Our Menu</h2>
+</br>
+<h3 id="pizza">Sicilian Pizza</h3>
+<div class="row">
+    <div class="col-md">
+        <h4 class="sizes">Small</h4>
+            <ul class="pizzas">
+                {% for sici_small in sici_smalls %}
+                <form action="{% url 'order_pizza' %}" method="post">
+                    {% csrf_token %}
+                    <li>
+                        <input name="pizza" type="hidden" value="{{ sici_small.id }}"/>
+                        <input class="select" type="submit" value="Select"/> {{ sici_small.flavor }} for USD: {{sici_small.price }}
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+
+    </div>
+    <div class="col-md">
+        <h4 class="sizes">Large</h4>
+            <ul class="pizzas">
+                {% for sici_large in sici_larges %}
+                <form action="{% url 'order_pizza' %}" method="post">
+                    {% csrf_token %}
+                    <li>
+                        <input name="pizza" type="hidden" value="{{ sici_large.id }}"/>
+                        <input class="select" type="submit" value="Select"/> {{ sici_large.flavor }} for USD: {{sici_large.price }}
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+    </div>
+</div>
+</br>
+<h3 id="pizza">Regular Pizza</h3>
+<div class="row">
+    <div class="col-md">
+        <h4 class="sizes">Small</h4>
+            <ul class="pizzas">
+                {% for regular_small in regular_smalls %}
+                <form action="{% url 'order_pizza' %}" method="post">
+                    {% csrf_token %}
+                    <li>
+                        <input name="pizza" type="hidden" value="{{ regular_small.id }}"/>
+                        <input class="select" type="submit" value="Select"/> {{ regular_small.flavor }} for USD: {{regular_small.price }}
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+    </div>
+    <div class="col-md">
+        <h4 class="sizes">Large</h4>
+            <ul class="pizzas">
+                {% for regular_large in regular_larges %}
+                <form action="{% url 'order_pizza' %}" method="post">
+                    {% csrf_token %}
+                    <li>
+                        <input name="pizza" type="hidden" value="{{ regular_large.id }}"/>
+                        <input class="select" type="submit" value="Select"/> {{ regular_large.flavor }} for USD: {{regular_large.price }}
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+    </div>
+</div>
+</br>
+<h3 id="toppings">Toppings</h3>
+<div class="row justify-content-center">
+    <div class="col-6">
+        <ul id="topping2">
+            {% for topping in toppings %}
+                <li id="topping3">
+                    {{ topping }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<hr>
+
+<h3 id="subs">Subs</h3>
+    <ul class="subs">
+        {% for sub in subs %}
+        <form action="{% url 'order_subs' %}" method="post">
+            {% csrf_token %}
+            <li class="subs2">
+                <input name="sub" type="hidden" value="{{ sub.id }}"/>
+                <input class="select" type="submit" value="Select"/> {{ sub }}
+            </li>
+        </form>
+        {% endfor %}
+    </ul>
+
+<h3 id="addons">Add-Ons</h3>
+<h4 id="steak">Steak + Cheese</h4>
+<div class="row justify-content-center">
+    <div class="col-12">
+        <ul id="addons2">
+            {% for sub_steak_addon in sub_steak_addons %}
+                <li id="addons3">
+                    {{ sub_steak_addon }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<h4 id="anysub">Any Sub</h4>
+<div class="row justify-content-center">
+    <div class="col-12">
+        <ul id="anysub2">
+            {% for sub_addon in sub_addons %}
+                <li id="anysub3">
+                    {{ sub_addon }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<hr>
+<h3 id="pasta">Pasta</h3>
+    <ul class="pasta">
+        {% for pasta in pastas %}
+        <form action="{% url 'order_pasta' %}" method="post">
+            {% csrf_token %}
+            <li class="pasta2">
+                <input name="pasta" type="hidden" value="{{ pasta.id }}"/>
+                <input class="select" type="submit" value="Select"/> {{ pasta }}
+            </li>
+        </form>
+        {% endfor %}
+    </ul>
+<hr>
+<h3 id="salads">Salads</h3>
+    <ul class="salads">
+        {% for salad in salads %}
+        <form action="{% url 'order_salads' %}" method="post">
+            {% csrf_token %}
+            <li class="salads2">
+                <input name="salads" type="hidden" value="{{ salad.id }}"/>
+                <input class="select" type="submit" value="Select"/> {{ salad }}
+            </li>
+        </form>
+        {% endfor %}
+    </ul>
+<hr>
+<h3 id="dinner">Dinner Platters</h3>
+    <ul class="dinner">
+        {% for dinner in dinners %}
+        <form action="{% url 'order_dinner' %}" method="post">
+        {% csrf_token %}
+            <li class="dinner2">
+                <input name="dinner" type="hidden" value="{{ dinner.id }}"/>
+                <input class="select" type="submit" value="Select"/> {{ dinner }}
+            </li>
+        </form>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -1,31 +1,32 @@
 {% extends "users/base.html" %}
 
 {% block body %}
-<h1>Hello, {{ user.first_name }}</h1>
-<ul>
-    <li>Currently logged in as: {{ user.username }}</li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-</ul>
-<hr>
-<h2>Pizzas</h2>
-<form action="{% url 'order' %}" method="post">
+<div class="row" id="hello">
+    <div class="col">
+        <h4>Hello, {{ user.first_name }}</h4>
+    </div>
+</div>
+</br>
+{% if topping_number %}
+<h3>Choose {{ topping_number }} topping(s) for your order <b>{{ pizza }}</b></h3>
+
+
+<form action="{% url 'order_toppings' %}" method="post">
     {% csrf_token %}
-    <ul>
-        {% for pizza in pizzas %}
-            <li>
-                {{ pizza }} <input name="pizza" type="submit" value="{{ pizza.id }}"/>
-            </li>
+        {% for topping in toppings %}
+                {{ topping }} <input  name="topping" type="checkbox" value="{{ topping.id }}" id="{{ topping.id }}"/><br/>
         {% endfor %}
-    </ul>
+    <br>
+    <input class="select" type="submit" value="Send Order"/>
 </form>
-<hr>
-<h2>Toppings</h2>
-<ul>
-    {% for topping in toppings %}
-        <li>
-            {{ topping }}
-        </li>
-    {% endfor %}
-</ul>
-<a href="{% url 'shopping_cart' %}">Shopping Cart</a>
+
+{% else %}
+<h2>Your order: {{ pizza }}</h2>
+{{ error }}
+<h4>{{ message }}</h4>
+<form action="{% url 'shopping_cart' %}" method="get">
+    {% csrf_token %}
+    <input class="select" type="submit" value="Send Order"/>
+</form>
+{% endif %}
 {% endblock %}
