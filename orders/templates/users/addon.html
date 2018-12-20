@@ -1,0 +1,32 @@
+{% extends "users/base.html" %}
+
+{% block body %}
+<h1>Hello, {{ user.first_name }}</h1>
+<ul>
+    <li>Currently logged in as: {{ user.username }}</li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+</ul>
+<hr>
+{% if topping_number %}
+<h2>Choose {{ topping_number }} topping(s) for your order {{ pizza }}:</h2>
+
+<h2>Toppings</h2>
+
+<form action="{% url 'order_toppings' %}" method="post">
+    {% csrf_token %}
+        {% for topping in toppings %}
+                {{ topping }} <input  name="topping" type="checkbox" value="{{ topping.id }}" id="{{ topping.id }}"/><br/>
+        {% endfor %}
+    <input type="submit" value="Send"/>
+</form>
+
+{% else %}
+<h2>Your order: {{ pizza }}</h2>
+{{ error }}
+<h3>{{ message }}</h3>
+<form action="{% url 'shopping_cart' %}" method="get">
+    {% csrf_token %}
+    <input type="submit" value="Send"/>
+</form>
+{% endif %}
+{% endblock %}

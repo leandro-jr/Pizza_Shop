@@ -1,0 +1,8 @@
+{% extends "users/base.html" %}
+
+{% block body %}
+<h1>Hello, {{ user.first_name }}</h1>
+<h2>Shopping Cart:</h2>
+{{ order }}
+<h3>Total: {{ order.price }}</h3>
+{% endblock %}
